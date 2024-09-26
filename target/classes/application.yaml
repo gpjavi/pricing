@@ -1,0 +1,59 @@
+server:
+  port: 8400
+  servlet:
+    context-path: /pricing/api
+  shutdown: graceful
+  tomcat.threads.max: 400
+
+app:
+  openapi:
+    server-url: /pricing/api
+    version: 0.0.1-SNAPSHOT
+    application-name: Pricing
+    description: Pricing
+
+spring:
+  application:
+    name: pricing
+  main:
+    allow-bean-definition-overriding: true
+  data:
+    jpa.repositories.enabled: true
+  datasource:
+    url: jdbc:h2:mem:db;DATABASE_TO_LOWER=TRUE;DB_CLOSE_DELAY=-1;INIT=CREATE SCHEMA IF NOT EXISTS pricing
+    driverClassName: org.h2.Driver
+    username: admin
+    password: admin
+  jpa:
+    show-sql: true
+    database-platform: org.hibernate.dialect.H2Dialect
+    defer-datasource-initialization: true
+    properties:
+      hibernate:
+        default_schema: pricing
+        globally_quoted_identifiers: true
+        format_sql: true
+    hibernate:
+      ddl-auto: none
+      naming:
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+        implicit-strategy: org.hibernate.boot.model.naming.ImplicitNamingStrategyLegacyJpaImpl
+  h2:
+    console.enabled: true
+    path: /h2-console
+    settings.trace: false
+    settings.web-allow-others: false
+
+logging:
+  custom:
+    access-logging-filter: true
+    request-logging-filter: false
+  pattern:
+    level: "%5p [${spring.application.name:},%X{traceId:-},%X{spanId:-}]"
+
+  level:
+    org:
+      springframework:
+        web:
+          filter:
+            CommonsRequestLoggingFilter: DEBUG

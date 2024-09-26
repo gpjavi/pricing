@@ -1,0 +1,9 @@
+com/pricing/infrastructure/database/springdata/model/jpa/price/PriceEntity.class
+com/PricingApplication.class
+com/pricing/infrastructure/database/springdata/model/jpa/price/CurrencyRepositoryDto.class
+com/pricing/infrastructure/config/spring/rest/logging/AccessLogFilter.class
+com/pricing/infrastructure/config/spring/rest/doc/OpenApiProperties.class
+com/pricing/infrastructure/config/spring/rest/logging/RequestLoggingFilterConfig.class
+com/pricing/infrastructure/config/spring/rest/doc/OpenApiConfig.class
+com/pricing/infrastructure/config/spring/database/config/SpringDataConfig.class
+com/pricing/infrastructure/database/springdata/model/jpa/brand/BrandEntity.class

@@ -1,0 +1,9 @@
+/home/jaff/data/software/projects/entrevistas/pricing/src/main/java/com/pricing/infrastructure/database/springdata/model/jpa/price/CurrencyRepositoryDto.java
+/home/jaff/data/software/projects/entrevistas/pricing/src/main/java/com/pricing/infrastructure/database/springdata/model/jpa/brand/BrandEntity.java
+/home/jaff/data/software/projects/entrevistas/pricing/src/main/java/com/pricing/infrastructure/database/springdata/model/jpa/price/PriceEntity.java
+/home/jaff/data/software/projects/entrevistas/pricing/src/main/java/com/pricing/infrastructure/config/spring/rest/doc/OpenApiConfig.java
+/home/jaff/data/software/projects/entrevistas/pricing/src/main/java/com/pricing/infrastructure/config/spring/database/config/SpringDataConfig.java
+/home/jaff/data/software/projects/entrevistas/pricing/src/main/java/com/PricingApplication.java
+/home/jaff/data/software/projects/entrevistas/pricing/src/main/java/com/pricing/infrastructure/config/spring/rest/logging/AccessLogFilter.java
+/home/jaff/data/software/projects/entrevistas/pricing/src/main/java/com/pricing/infrastructure/config/spring/rest/doc/OpenApiProperties.java
+/home/jaff/data/software/projects/entrevistas/pricing/src/main/java/com/pricing/infrastructure/config/spring/rest/logging/RequestLoggingFilterConfig.java
