@@ -31,6 +31,9 @@ public interface PriceApi {
           @ApiResponse(responseCode = "400", description = "Invalid parameters", content = {
               @Content(schema = @Schema(implementation = ErrorResponseWebDto.class))
           }),
+          @ApiResponse(responseCode = "404", description = "Not found", content = {
+              @Content(schema = @Schema(implementation = ErrorResponseWebDto.class))
+          }),
           @ApiResponse(responseCode = "501", description = "Repository exception", content = {
               @Content(schema = @Schema(implementation = ErrorResponseWebDto.class))
           }),

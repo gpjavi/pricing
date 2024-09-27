@@ -45,6 +45,7 @@ public class ApiErrorHandler extends ResponseEntityExceptionHandler {
     return switch (exceptionType) {
       case ExceptionType.REPOSITORY -> HttpStatus.SERVICE_UNAVAILABLE;
       case ExceptionType.RULES_VIOLATION -> HttpStatus.BAD_REQUEST;
+      case ExceptionType.NOT_FOUND ->  HttpStatus.NOT_FOUND;
       default -> HttpStatus.INTERNAL_SERVER_ERROR;
     };
   }

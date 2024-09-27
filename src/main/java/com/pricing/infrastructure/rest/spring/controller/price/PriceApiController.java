@@ -3,6 +3,7 @@ package com.pricing.infrastructure.rest.spring.controller.price;
 import com.pricing.application.usecase.price.PriceFinder;
 import com.pricing.domain.exception.price.PriceFinderException;
 
+import com.pricing.domain.exception.price.PriceFinderException.PriceErrorCode;
 import com.pricing.infrastructure.rest.api.price.PriceApi;
 import com.pricing.infrastructure.rest.api.price.dto.PriceResponseRestDto;
 import com.pricing.infrastructure.rest.spring.controller.price.mapper.PriceRestMapper;
@@ -22,7 +23,9 @@ public class PriceApiController implements PriceApi {
   public ResponseEntity<PriceResponseRestDto> getPriceApplied(LocalDateTime date, Long productId,
       Long brandId) throws PriceFinderException {
     PriceResponseRestDto priceResponseDTO = priceFinder.getApplicablePrice(date, productId,
-        brandId).map(priceMapper::toDto).orElse(new PriceResponseRestDto());
+        brandId).map(priceMapper::toDto).orElseThrow(() -> new PriceFinderException(String.format(
+        "[AppliedDate: %s][ProductId: %s][BrandId: %s] - Not found applicable price",
+        date, productId, brandId), PriceErrorCode.NOT_FOUND));
 
     return ResponseEntity.ok(priceResponseDTO);
   }

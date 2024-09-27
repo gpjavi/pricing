@@ -3,6 +3,7 @@ package com.pricing.infrastructure.rest.spring.controller.price;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.times;
@@ -12,11 +13,13 @@ import static org.springframework.http.HttpStatus.OK;
 
 import com.pricing.application.usecase.price.PriceFinder;
 import com.pricing.domain.exception.price.PriceFinderException;
+import com.pricing.domain.exception.price.PriceFinderException.PriceErrorCode;
 import com.pricing.domain.model.price.Price;
 import com.pricing.infrastructure.rest.api.price.dto.PriceResponseRestDto;
 import com.pricing.infrastructure.rest.spring.controller.price.mapper.PriceRestMapper;
 import java.time.LocalDateTime;
 import java.util.Optional;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -46,6 +49,7 @@ class PriceApiControllerTest {
 
 
   @Test
+  @DisplayName("getPriceApplied returns valid price for given parameters")
   void givenValidParams_whenGetPriceApplied_thenReturnsPriceResponse() throws PriceFinderException {
     // Given
     when(priceFinder.getApplicablePrice(date, productId, brandId)).thenReturn(Optional.of(price));
@@ -64,19 +68,17 @@ class PriceApiControllerTest {
   }
 
   @Test
-  void givenNoPriceFound_whenGetPriceApplied_thenReturnsEmptyResponse()
-      throws PriceFinderException {
+  @DisplayName("getPriceApplied throws PriceFinderException when no price is found")
+  void testGetPriceAppliedThrowsNotFoundException() throws PriceFinderException {
     // Given
     when(priceFinder.getApplicablePrice(date, productId, brandId)).thenReturn(Optional.empty());
 
-    // When
-    ResponseEntity<PriceResponseRestDto> response =
-        classUnderTest.getPriceApplied(date, productId, brandId);
+    // When & Then
+    PriceFinderException exception = assertThrows(PriceFinderException.class, () ->
+        classUnderTest.getPriceApplied(date, productId, brandId));
 
-    // Then
-    assertEquals(OK, response.getStatusCode());
-    assertNotNull(response.getBody());
-    assertEquals(new PriceResponseRestDto(), response.getBody());
+    assertTrue(exception.getMessage().contains("Not found applicable price"));
+    assertEquals(PriceErrorCode.NOT_FOUND, exception.getPriceErrorCode());
     verify(priceFinder, times(1)).getApplicablePrice(date, productId, brandId);
     verify(priceMapper, never()).toDto(any());
   }
