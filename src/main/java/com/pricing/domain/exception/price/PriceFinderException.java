@@ -31,10 +31,11 @@ public class PriceFinderException extends DomainException {
   @AllArgsConstructor
   public enum PriceErrorCode {
 
-    UNKNOWN_EXCEPTION(100, "Unable to perform required operation", ExceptionType.UNKNOWN),
     REPOSITORY_EXCEPTION(100, "Unable to perform required operation in repository",
         ExceptionType.REPOSITORY),
-    INVALID_DATA(101, "Specified data is not valid", ExceptionType.RULES_VIOLATION);
+    INVALID_DATA(101, "Specified data is not valid", ExceptionType.RULES_VIOLATION),
+    UNKNOWN_EXCEPTION(700, "Unable to perform required operation", ExceptionType.UNKNOWN),
+    NOT_FOUND(404, "Not found", ExceptionType.NOT_FOUND);
 
     private final ErrorCode errorCode;
 

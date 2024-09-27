@@ -7,7 +7,9 @@ All principal changes to this project will be documented in this file.
 #### :rocket: New Feature
 
 - `Pricing App`
-    - [#10375] feat(pricing): Added pricing API for retrieving applied price ([@gpjavi](https://github.com/gpjavi))
+ 
+    - [#10374] feat(pricing): Added 404 response when no found applied price ([@gpjavi](https://github.com/gpjavi))
+    - [#10375] feat(pricing): Added pricing API for retrieving applied price ([@gpjavi](https://github.com/gpjavi))    
 
 #### Committers: 1
 

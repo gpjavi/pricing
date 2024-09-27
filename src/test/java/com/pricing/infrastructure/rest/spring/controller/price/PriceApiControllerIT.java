@@ -2,8 +2,11 @@ package com.pricing.infrastructure.rest.spring.controller.price;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import com.pricing.infrastructure.rest.api.error.ErrorResponseWebDto;
 import com.pricing.infrastructure.rest.api.price.dto.PriceResponseRestDto;
+import java.io.IOException;
 import java.math.BigDecimal;
 import java.net.URI;
 import java.time.LocalDateTime;
@@ -20,7 +23,9 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.client.ClientHttpResponse;
 import org.springframework.test.context.ActiveProfiles;
+import org.springframework.web.client.DefaultResponseErrorHandler;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
@@ -49,7 +54,8 @@ class PriceApiControllerIT {
 
   @BeforeEach
   void setUp() {
-    restTemplate = new RestTemplate();
+    configureRestTemplate();
+
     String baseUrl = LOCALHOST.concat(":").concat(String.valueOf(port));
     priceAppliedUrl = baseUrl.concat(PRICING_API);
   }
@@ -174,6 +180,63 @@ class PriceApiControllerIT {
     assertEquals(4, response.getBody().getPriceList());
   }
 
+
+  @Test
+  @DisplayName("Bad Request when date parameter is missing")
+  void testBadRequestWhenDateIsMissing() {
+    // Given
+    URI uri = UriComponentsBuilder.fromHttpUrl(priceAppliedUrl)
+        .queryParam(PRODUCT_ID_PARAMETER, PRODUCT_ID_DEFAULT_VALUE)
+        .queryParam(BRAND_ID_PARAMETER, BRAND_ID_DEFAULT_VALUE)
+        .build()
+        .toUri();
+
+    // When
+    ResponseEntity<ErrorResponseWebDto> response = restTemplate.exchange(uri, HttpMethod.GET, getDefaultEntity(), ErrorResponseWebDto.class);
+
+    // Then
+    assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
+    assertNotNull(response.getBody());
+  }
+
+  @Test
+  @DisplayName("Not Found when no applicable price is found")
+  void testNotFoundWhenNoPriceAppliedFound() {
+    // Given
+    URI uri = UriComponentsBuilder.fromHttpUrl(priceAppliedUrl)
+        .queryParam(DATE_PARAMETER, LocalDateTime.of(2025, 1, 1, 10, 0).format(formatter))  // A future date where no price exists
+        .queryParam(PRODUCT_ID_PARAMETER, PRODUCT_ID_DEFAULT_VALUE)
+        .queryParam(BRAND_ID_PARAMETER, BRAND_ID_DEFAULT_VALUE)
+        .build()
+        .toUri();
+
+    // When
+    ResponseEntity<ErrorResponseWebDto> response = restTemplate.exchange(uri, HttpMethod.GET, getDefaultEntity(), ErrorResponseWebDto.class);
+
+    // Then
+    assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());  // Assert 404 status
+    assertNotNull(response.getBody());  // Ensure body is not null
+    assertEquals(404, response.getBody().getCode());  // Check the error code
+    assertTrue(response.getBody().getMessage().contains("Not found applicable price"));  // Check error message
+    assertTrue(response.getBody().getDescription().contains("Not found"));  // Check error description
+  }
+
+
+
+  private void configureRestTemplate() {
+    restTemplate = new RestTemplate();
+    restTemplate.setErrorHandler(new DefaultResponseErrorHandler() {
+      @Override
+      public void handleError(ClientHttpResponse response) throws IOException {
+        if (response.getStatusCode() == HttpStatus.NOT_FOUND ||
+            response.getStatusCode() == HttpStatus.BAD_REQUEST) {
+          // Ignore Not Found (404) and Bad Request(400) and let the response pass through
+          return;
+        }
+        super.handleError(response);  // For other errors, call default handler
+      }
+    });
+  }
 
   private HttpEntity<?> getDefaultEntity() {
     HttpHeaders headers = new HttpHeaders();
