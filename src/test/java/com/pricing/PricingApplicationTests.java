@@ -11,6 +11,7 @@ class PricingApplicationTests {
 
   @Test
   void contextLoads() {
+    // Test for checking context loads properly
   }
 
 }

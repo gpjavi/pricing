@@ -12,7 +12,7 @@ import org.springframework.context.annotation.Configuration;
 public class PriceQueryRepositoryConfig {
 
   @Bean
-  public PriceQueryRepository PriceQueryRepository(PriceEntityJpaRepository jpaRepository,
+  public PriceQueryRepository priceQueryRepository(PriceEntityJpaRepository jpaRepository,
       PriceEntityMapper priceEntityMapper) {
     return new PriceQueryRepositoryImpl(jpaRepository, priceEntityMapper);
   }

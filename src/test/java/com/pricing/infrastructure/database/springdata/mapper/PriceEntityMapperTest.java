@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
 import org.junit.jupiter.api.Test;
 import org.mapstruct.factory.Mappers;
 
-public class PriceEntityMapperTest {
+class PriceEntityMapperTest {
 
   private final PriceEntityMapper priceEntityMapper = Mappers.getMapper(PriceEntityMapper.class);
 
@@ -41,7 +41,7 @@ public class PriceEntityMapperTest {
     assertEquals(priceEntity.getStartDate(), result.getStartDate());
     assertEquals(priceEntity.getEndDate(), result.getEndDate());
     assertEquals(priceEntity.getPriceList(), result.getPriceList());
-    assertEquals(priceEntity.getPrice(), result.getPrice());
+    assertEquals(priceEntity.getPrice(), result.getValue());
   }
 
   @Test
