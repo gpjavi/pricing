@@ -17,5 +17,5 @@ public class Price {
   private Integer priceList;
   private LocalDateTime startDate;
   private LocalDateTime endDate;
-  private BigDecimal price;
+  private BigDecimal value;
 }

@@ -9,7 +9,7 @@ spring:
     url: jdbc:h2:mem:testdb;DATABASE_TO_LOWER=TRUE;DB_CLOSE_DELAY=-1;INIT=CREATE SCHEMA IF NOT EXISTS pricing
     driverClassName: org.h2.Driver
     username: admin
-    password: admin
+    password: password
   sql:
     init:
       mode: always

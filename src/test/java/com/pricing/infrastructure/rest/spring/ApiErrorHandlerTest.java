@@ -71,8 +71,8 @@ class ApiErrorHandlerTest {
     assertEquals(ERROR_MESSAGE, response.getBody().getMessage());
 
     ErrorCode errorCode = priceErrorCode.getErrorCode();
-    assertEquals(errorCode.id(), response.getBody().getCode());
-    assertEquals(errorCode.message(), response.getBody().getDescription());
+    assertEquals(errorCode.getId(), response.getBody().getCode());
+    assertEquals(errorCode.getMessage(), response.getBody().getDescription());
   }
 
 
@@ -95,8 +95,8 @@ class ApiErrorHandlerTest {
     assertEquals(ERROR_MESSAGE, response.getBody().getMessage());
 
     ErrorCode errorCode = priceErrorCode.getErrorCode();
-    assertEquals(errorCode.id(), response.getBody().getCode());
-    assertEquals(errorCode.message(), response.getBody().getDescription());
+    assertEquals(errorCode.getId(), response.getBody().getCode());
+    assertEquals(errorCode.getMessage(), response.getBody().getDescription());
   }
 
   @Test
@@ -118,8 +118,8 @@ class ApiErrorHandlerTest {
     assertEquals(ERROR_MESSAGE, response.getBody().getMessage());
 
     ErrorCode errorCode = priceErrorCode.getErrorCode();
-    assertEquals(errorCode.id(), response.getBody().getCode());
-    assertEquals(errorCode.message(), response.getBody().getDescription());
+    assertEquals(errorCode.getId(), response.getBody().getCode());
+    assertEquals(errorCode.getMessage(), response.getBody().getDescription());
   }
 
   @Test
@@ -141,8 +141,8 @@ class ApiErrorHandlerTest {
     assertEquals(ERROR_MESSAGE, response.getBody().getMessage());
 
     ErrorCode errorCode = priceErrorCode.getErrorCode();
-    assertEquals(errorCode.id(), response.getBody().getCode());
-    assertEquals(errorCode.message(), response.getBody().getDescription());
+    assertEquals(errorCode.getId(), response.getBody().getCode());
+    assertEquals(errorCode.getMessage(), response.getBody().getDescription());
   }
 
 

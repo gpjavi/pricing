@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
 import org.junit.jupiter.api.Test;
 import org.mapstruct.factory.Mappers;
 
-public class PriceRestMapperTest {
+class PriceRestMapperTest {
 
   private final PriceRestMapper classUnderTest = Mappers.getMapper(PriceRestMapper.class);
 
@@ -24,7 +24,7 @@ public class PriceRestMapperTest {
     price.setStartDate(LocalDateTime.of(2020, 6, 14, 0, 0));
     price.setEndDate(LocalDateTime.of(2020, 12, 31, 23, 59));
     price.setPriceList(1);
-    price.setPrice(new BigDecimal("35.50"));
+    price.setValue(new BigDecimal("35.50"));
 
     // When
     PriceResponseRestDto result = classUnderTest.toDto(price);
@@ -36,7 +36,7 @@ public class PriceRestMapperTest {
     assertEquals(price.getStartDate(), result.getStartDate());
     assertEquals(price.getEndDate(), result.getEndDate());
     assertEquals(price.getPriceList(), result.getPriceList());
-    assertEquals(price.getPrice(), result.getPrice());
+    assertEquals(price.getValue(), result.getPrice());
   }
 
   @Test

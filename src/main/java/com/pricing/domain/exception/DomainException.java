@@ -1,10 +1,15 @@
 package com.pricing.domain.exception;
 
+import java.io.Serial;
+import java.io.Serializable;
 import lombok.Getter;
 
 @Getter
-public abstract class DomainException extends Exception {
+public abstract class DomainException extends Exception implements Serializable {
 
+
+  @Serial
+  private static final long serialVersionUID = -7487603407185667716L;
   private final ErrorCode errorCode;
 
   protected DomainException(Throwable throwable, String message, ErrorCode errorCode) {
@@ -18,14 +23,14 @@ public abstract class DomainException extends Exception {
   }
 
   public ExceptionType getExceptionType() {
-    return errorCode.exceptionType();
+    return errorCode.getExceptionType();
   }
 
   public Integer getErrorCodeId() {
-    return errorCode.id();
+    return errorCode.getId();
   }
 
   public String getErrorCodeDescription() {
-    return errorCode.message();
+    return errorCode.getMessage();
   }
 }

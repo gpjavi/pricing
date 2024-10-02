@@ -45,7 +45,7 @@ class PriceApiControllerTest {
   private final Long brandId = 1L;
   private final LocalDateTime date = LocalDateTime.of(2020, 6, 14, 0, 0);
   private final Price price = new Price();
-  private final PriceResponseRestDto PriceResponseRestDto = new PriceResponseRestDto();
+  private final PriceResponseRestDto priceResponseRestDto = new PriceResponseRestDto();
 
 
   @Test
@@ -53,7 +53,7 @@ class PriceApiControllerTest {
   void givenValidParams_whenGetPriceApplied_thenReturnsPriceResponse() throws PriceFinderException {
     // Given
     when(priceFinder.getApplicablePrice(date, productId, brandId)).thenReturn(Optional.of(price));
-    when(priceMapper.toDto(price)).thenReturn(PriceResponseRestDto);
+    when(priceMapper.toDto(price)).thenReturn(priceResponseRestDto);
 
     // When
     ResponseEntity<PriceResponseRestDto> response =
@@ -62,7 +62,7 @@ class PriceApiControllerTest {
     // Then
     assertEquals(OK, response.getStatusCode());
     assertNotNull(response.getBody());
-    assertEquals(PriceResponseRestDto, response.getBody());
+    assertEquals(priceResponseRestDto, response.getBody());
     verify(priceFinder, times(1)).getApplicablePrice(date, productId, brandId);
     verify(priceMapper, times(1)).toDto(price);
   }
